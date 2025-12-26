@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Личный кабинет</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2 id="welcome">Добро пожаловать!</h2>
+    <nav>
+      <a href="profile.html">Профиль</a> |
+      <a href="settings.html">Настройки</a> |
+      <a href="logout.html">Выйти</a>
+    </nav>
+    <p>Это основная страница после входа. Здесь может отображаться аналитика, уведомления и т.д.</p>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const user = urlParams.get('user');
+    if (user) {
+      document.getElementById('welcome').textContent = `Добро пожаловать, ${user}!`;
+    } else {
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

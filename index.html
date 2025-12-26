@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Авторизация</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Вход в систему</h2>
+    <form id="loginForm">
+      <label>Логин:</label>
+      <input type="text" id="username" required />
+      <label>Пароль:</label>
+      <input type="password" id="password" required />
+      <button type="submit">Войти</button>
+    </form>
+    <p id="error" style="color: red; display: none;">Неверный логин или пароль</p>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const user = document.getElementById('username').value;
+      const pass = document.getElementById('password').value;
+
+      // Простая "авторизация" для тестов
+      if (user === 'test' && pass === '12345') {
+        window.location.href = 'dashboard.html?user=' + encodeURIComponent(user);
+      } else {
+        document.getElementById('error').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
