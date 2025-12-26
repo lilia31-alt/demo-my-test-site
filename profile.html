@@ -2,16 +2,26 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Профиль</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h2>Мой профиль</h2>
-    <p><strong>Имя:</strong> Тестовый пользователь</p>
-    <p><strong>Email:</strong> test@example.com</p>
-    <p><strong>Роль:</strong> QA Engineer</p>
-    <a href="dashboard.html">← Назад в кабинет</a>
+    <h2>👤 Мой профиль</h2>
+    <div class="profile-info">
+      <p><strong>Имя:</strong> Тестовый пользователь</p>
+      <p><strong>Email:</strong> test@example.com</p>
+      <p><strong>Роль:</strong> QA Engineer</p>
+      <p><strong>Статус:</strong> <span class="status active">Активен</span></p>
+    </div>
+    <a href="dashboard.html?user=test" class="back-link">← Назад в кабинет</a>
   </div>
+
+  <script>
+    const user = new URLSearchParams(window.location.search).get('user');
+    if (!user) window.location.href = 'index.html';
+    document.body.classList.add(localStorage.getItem('theme') || 'light');
+  </script>
 </body>
 </html>

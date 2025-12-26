@@ -2,28 +2,37 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Личный кабинет</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="dashboard-page">
   <div class="container">
     <h2 id="welcome">Добро пожаловать!</h2>
-    <nav>
-      <a href="profile.html">Профиль</a> |
-      <a href="settings.html">Настройки</a> |
-      <a href="logout.html">Выйти</a>
+    <div class="stats-grid">
+      <div class="stat-card">✅ Тестов пройдено: <strong>24</strong></div>
+      <div class="stat-card">🐞 Ошибок найдено: <strong>7</strong></div>
+      <div class="stat-card">⏱️ Последний запуск: <strong>10 мин назад</strong></div>
+    </div>
+    <nav class="nav-links">
+      <a href="profile.html?user=test">👤 Профиль</a>
+      <a href="settings.html?user=test">⚙️ Настройки</a>
+      <a href="logout.html">🚪 Выйти</a>
     </nav>
-    <p>Это основная страница после входа. Здесь может отображаться аналитика, уведомления и т.д.</p>
+    <p class="hint">Используйте этот интерфейс для отработки UI-автотестов: навигация, динамический контент, темы.</p>
   </div>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const user = urlParams.get('user');
-    if (user) {
-      document.getElementById('welcome').textContent = `Добро пожаловать, ${user}!`;
-    } else {
+    if (!user) {
       window.location.href = 'index.html';
+    } else {
+      document.getElementById('welcome').textContent = `Добро пожаловать, ${user}!`;
     }
+
+    // Применяем тему при загрузке
+    document.body.classList.add(localStorage.getItem('theme') || 'light');
   </script>
 </body>
 </html>

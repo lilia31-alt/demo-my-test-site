@@ -2,26 +2,83 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Настройки</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <h2>Настройки аккаунта</h2>
-    <form>
-      <label>
-        <input type="checkbox" id="notifications" checked /> Уведомления по email
-      </label><br><br>
-      <label>
-        Тема интерфейса:
-        <select id="theme">
-          <option>Светлая</option>
-          <option>Тёмная</option>
+    <h2>⚙️ Настройки аккаунта</h2>
+
+    <form id="settingsForm">
+      <div class="setting-group">
+        <label class="switch">
+          <input type="checkbox" id="notifications" />
+          <span class="slider"></span>
+        </label>
+        <span>Уведомления по email</span>
+      </div>
+
+      <div class="setting-group">
+        <label for="themeSelect">Тема интерфейса:</label>
+        <select id="themeSelect">
+          <option value="light">Светлая</option>
+          <option value="dark">Тёмная</option>
         </select>
-      </label><br><br>
-      <button type="button" onclick="alert('Настройки сохранены!')">Сохранить</button>
+      </div>
+
+      <div class="setting-group">
+        <label for="langSelect">Язык интерфейса:</label>
+        <select id="langSelect">
+          <option value="ru">Русский</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <button type="submit" id="saveBtn">💾 Сохранить настройки</button>
+      <div id="saveStatus" class="status-message"></div>
     </form>
-    <a href="dashboard.html">← Назад</a>
+
+    <a href="dashboard.html?user=test" class="back-link">← Назад в кабинет</a>
   </div>
+
+  <script>
+    // Проверка авторизации
+    const user = new URLSearchParams(window.location.search).get('user');
+    if (!user) window.location.href = 'index.html';
+
+    // Применить текущую тему
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    const currentLang = localStorage.getItem('lang') || 'ru';
+    const notificationsOn = localStorage.getItem('notifications') !== 'false';
+
+    document.getElementById('themeSelect').value = currentTheme;
+    document.getElementById('langSelect').value = currentLang;
+    document.getElementById('notifications').checked = notificationsOn;
+    document.body.classList.add(currentTheme);
+
+    // Сохранение формы
+    document.getElementById('settingsForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const theme = document.getElementById('themeSelect').value;
+      const lang = document.getElementById('langSelect').value;
+      const notifications = document.getElementById('notifications').checked;
+
+      localStorage.setItem('theme', theme);
+      localStorage.setItem('lang', lang);
+      localStorage.setItem('notifications', notifications);
+
+      // Показать статус
+      const status = document.getElementById('saveStatus');
+      status.textContent = '✅ Настройки сохранены!';
+      status.style.color = '#28a745';
+      setTimeout(() => status.textContent = '', 2000);
+
+      // Применить тему немедленно
+      document.body.classList.remove('light', 'dark');
+      document.body.classList.add(theme);
+    });
+  </script>
 </body>
 </html>
